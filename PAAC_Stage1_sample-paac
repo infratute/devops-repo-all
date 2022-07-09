@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    stages {
+        stage('Fetch Code'){
+            steps {
+                git branch: 'paac', url: 'https://github.com/infratute/devops-repo-all.git' 
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn install'
+            }
+            post{
+                success {
+                    echo "Now Archiving"
+                    archiveArtifacts artifacts: '**/*.war'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test' 
+            }
+        }
+    }
+}

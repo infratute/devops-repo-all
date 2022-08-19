@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'Maven-3-6-0'
+        jdk 'java8'
+    }
     stages{
         stage('Fetch code') {
           steps{

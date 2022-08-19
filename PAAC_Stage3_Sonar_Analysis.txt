@@ -7,7 +7,7 @@ pipeline {
     stages{
         stage('Fetch code') {
           steps{
-              git branch: 'vp-rem', url:'https://github.com/devopshydclub/vprofile-repo.git'
+              git branch: 'paac', url:'https://github.com/infratute/devops-repo-all.git'
           }  
         }
 
@@ -42,7 +42,7 @@ pipeline {
             steps {
                withSonarQubeEnv('sonar') {
                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
-                   -Dsonar.projectName=vprofile \
+                   -Dsonar.projectName=sample-paac \
                    -Dsonar.projectVersion=1.0 \
                    -Dsonar.sources=src/ \
                    -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \

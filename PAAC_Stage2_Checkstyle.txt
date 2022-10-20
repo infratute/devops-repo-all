@@ -1,8 +1,8 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven-3-6-0'
-        jdk 'java8'
+        maven 'Maven_3' // make sure to use the right tool name as specified in Jenkins
+        jdk 'OracleJDK8' // make sure to use the right tool name as specified in Jenkins
     }
     stages{
         stage('Fetch code') {

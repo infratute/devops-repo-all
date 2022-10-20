@@ -1,48 +1,44 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven_3'
+        maven 'MAVEN3'
         jdk 'OracleJDK8'
     }
-    stages{
-        stage('Fetch code') {
-          steps{
-              git branch: 'paac', url:'https://github.com/infratute/devops-repo-all.git'
-          }  
+    stages {
+        stage('Fetch Code'){
+            steps {
+                git branch: 'vp-rem', url: 'https://github.com/infratute/devops-repo-all.git' 
+            }
         }
-
         stage('Build') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                sh 'mvn install -DskipTests'
             }
-            post {
+            post{
                 success {
-                    echo "Now Archiving."
+                    echo "Now Archiving"
                     archiveArtifacts artifacts: '**/*.war'
                 }
             }
         }
-        stage('Test'){
+        stage('UNIT TEST') {
             steps {
-                sh 'mvn test'
-            }
-
-        }
-
-        stage('Checkstyle Analysis'){
-            steps {
-                sh 'mvn checkstyle:checkstyle'
+                sh 'mvn test' 
             }
         }
-
+        stage('Checkstyle Analysis') {
+            steps {
+                sh 'mvn checkstyle:checkstyle' 
+            }
+        }
         stage('Sonar Analysis') {
             environment {
                 scannerHome = tool 'sonar4.7'
             }
             steps {
-               withSonarQubeEnv('sonar') {
+                withSonarQubeEnv('sonar') {
                    sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
-                   -Dsonar.projectName=sample-paac \
+                   -Dsonar.projectName=vprofile \
                    -Dsonar.projectVersion=1.0 \
                    -Dsonar.sources=src/ \
                    -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
@@ -52,6 +48,5 @@ pipeline {
               }
             }
         }
-
     }
 }

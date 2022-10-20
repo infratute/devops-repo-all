@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn install'
+                sh 'mvn install -DskipTests'
             }
             post{
                 success {
@@ -21,7 +21,7 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('UNIT TEST') {
             steps {
                 sh 'mvn test' 
             }

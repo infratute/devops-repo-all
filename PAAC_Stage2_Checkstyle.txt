@@ -1,13 +1,13 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven_3' // make sure to use the right tool name as specified in Jenkins
+        maven 'MAVEN3' // make sure to use the right tool name as specified in Jenkins
         jdk 'OracleJDK8' // make sure to use the right tool name as specified in Jenkins
     }
     stages{
         stage('Fetch code') {
           steps{
-              git branch: 'paac', url:'https://github.com/infratute/devops-repo-all.git'
+              git branch: 'vp-rem', url:'https://github.com/infratute/devops-repo-all.git'
           }  
         }
 

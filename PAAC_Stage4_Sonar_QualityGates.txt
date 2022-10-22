@@ -1,3 +1,4 @@
+// This stage requires WEB HOOKs in the SonarQube to respond back to the Jenkins.
 pipeline {
     agent any
     tools {

@@ -13,10 +13,10 @@ sonarqube   -   nproc    409
 EOT
 
 sudo apt-get update -y
-sudo apt-get install openjdk-11-jdk -y
+sudo apt-get install openjdk-17-jdk -y
 sudo update-alternatives --config java
 
-java -version
+java --version
 
 sudo apt update
 wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
@@ -36,10 +36,10 @@ systemctl restart  postgresql
 netstat -tulpena | grep postgres
 sudo mkdir -p /sonarqube/
 cd /sonarqube/
-sudo curl -O https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-8.3.0.34182.zip
+sudo curl -O https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.3.79811.zip
 sudo apt-get install zip -y
-sudo unzip -o sonarqube-8.3.0.34182.zip -d /opt/
-sudo mv /opt/sonarqube-8.3.0.34182/ /opt/sonarqube
+sudo unzip -o sonarqube-9.9.3.79811.zip -d /opt/
+sudo mv /opt/sonarqube-9.9.3.79811/ /opt/sonarqube
 sudo groupadd sonar
 sudo useradd -c "SonarQube - User" -d /opt/sonarqube/ -g sonar sonar
 sudo chown sonar:sonar /opt/sonarqube/ -R
@@ -101,7 +101,6 @@ server{
         proxy_pass  http://127.0.0.1:9000;
         proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
         proxy_redirect off;
-              
         proxy_set_header    Host            \$host;
         proxy_set_header    X-Real-IP       \$remote_addr;
         proxy_set_header    X-Forwarded-For \$proxy_add_x_forwarded_for;

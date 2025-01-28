@@ -11,7 +11,6 @@ rm -rf /tmp/nexus/nexus.tar.gz
 rsync -avzh /tmp/nexus/ /opt/nexus/
 useradd nexus
 chown -R nexus.nexus /opt/nexus
-chown -R nexus:nexus /app/sonatype-work
 cat <<EOT>> /etc/systemd/system/nexus.service
 [Unit]                                                                          
 Description=nexus service                                                       

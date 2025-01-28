@@ -1,5 +1,5 @@
 #!/bin/bash
-yum install java-1.8.0-openjdk.x86_64 wget rsync -y   
+yum install java-17-openjdk wget rsync -y   
 mkdir -p /opt/nexus/   
 mkdir -p /tmp/nexus/                           
 cd /tmp/nexus/
@@ -10,7 +10,8 @@ NEXUSDIR=`echo $EXTOUT | cut -d '/' -f1`
 rm -rf /tmp/nexus/nexus.tar.gz
 rsync -avzh /tmp/nexus/ /opt/nexus/
 useradd nexus
-chown -R nexus.nexus /opt/nexus 
+chown -R nexus.nexus /opt/nexus
+chown -R nexus:nexus /app/sonatype-work
 cat <<EOT>> /etc/systemd/system/nexus.service
 [Unit]                                                                          
 Description=nexus service                                                       

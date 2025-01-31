@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    tools {
+        maven 'MAVEN3'
+        jdk 'OracleJDK8'
+    }
+    stages {
+        stage('Fetch Code') {
+            steps {
+                git branch: 'vp-rem', url: 'https://github.com/devopshydclub/vprofile-project.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn install -DskipTests'
+            }
+        }
+        stage('UNIT TEST') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Checkstyle Analysis') {
+            steps {
+                sh 'mvn checkstyle:checkstyle'
+            }
+        }
+    }
+    post {
+        success {
+            echo "Now Archiving"
+            archiveArtifacts artifacts: '**/*.war'
+
+            // Success Email Notification
+            emailext subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                     body: """
+                        <p>Build <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> completed successfully!</p>
+                        <p>Check the artifacts at <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                     """,
+                     to: 'admin@arrzion.com',
+                     mimeType: 'text/html'
+        }
+        failure {
+            // Failure Email Notification
+            emailext subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                     body: """
+                        <p>Build <b>${env.JOB_NAME} #${env.BUILD_NUMBER}</b> has failed.</p>
+                        <p>Check the console output at <a href="${env.BUILD_URL}">${env.BUILD_URL}</a> for details.</p>
+                     """,
+                     attachLog: true,
+                     to: 'admin@arrzion.com',
+                     mimeType: 'text/html'
+        }
+    }
+}

@@ -5,7 +5,7 @@ yum install java-17-openjdk wget rsync -y
 mkdir -p /opt/nexus/   
 mkdir -p /tmp/nexus/                           
 cd /tmp/nexus/
-NEXUSURL="https://download.sonatype.com/nexus/3/latest-unix.tar.gz"
+NEXUSURL="https://--replace--with--correct--url"
 wget $NEXUSURL -O nexus.tar.gz
 EXTOUT=`tar xzvf nexus.tar.gz`
 NEXUSDIR=`echo $EXTOUT | cut -d '/' -f1`

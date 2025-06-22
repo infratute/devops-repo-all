@@ -1,4 +1,6 @@
 #!/bin/bash
+# This script works on Centos 9 also. Line 7 - Check for the correct download url from the below link.
+# https://help.sonatype.com/en/download-archives---repository-manager-3.html
 yum install java-17-openjdk wget rsync -y   
 mkdir -p /opt/nexus/   
 mkdir -p /tmp/nexus/                           

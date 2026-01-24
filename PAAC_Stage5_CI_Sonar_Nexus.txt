@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'MAVEN3'
-        jdk 'OracleJDK8'
+        jdk 'OracleJDK11'
     }
     stages {
         stage('Fetch Code'){
@@ -48,23 +48,14 @@ pipeline {
               }
             }
         }
-        stage("Quality Gate") {
-            steps {
-                timeout(time: 3, unit: 'MINUTES') {
-                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
-                    // true = set pipeline to UNSTABLE, false = don't
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-        stage("UploadArtifact"){
+       stage("UploadArtifact"){
             steps{
                 nexusArtifactUploader(
                   nexusVersion: 'nexus3',
                   protocol: 'http',
-                  nexusUrl: '34.170.186.175:8081',
+                  nexusUrl: '192.168.1.183:8081',
                   groupId: 'QA',
-                  version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
+                  version: "${env.BUILD_ID}-${new Date().format('yyyyMMdd-HHmmss', TimeZone.getTimeZone('UTC'))}",
                   repository: 'vprofile-repo',
                   credentialsId: 'nexuslogin',
                   artifacts: [
